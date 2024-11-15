@@ -130,11 +130,10 @@ def generate_report():
         f.write("  - Total frames analyzed: 320\n")
         f.write("  - Format: High-quality JPG images\n")
         f.write("  - Original video sources: 3\n\n")
-        
         f.write("For detailed implementation, see:\n")
         f.write("```python:split2frames.py\n")
         f.write(read_code_file('split2frames.py', 37, 86))
-        f.write("```\n\n")
+        f.write("\n```\n")
         
         # 3. Technical Implementation
         f.write("## Technical Implementation\n\n")
@@ -142,14 +141,14 @@ def generate_report():
         f.write("1. **LLaMA 3.2 Vision Model Integration**\n")
         f.write("```python:llama32_detect.py\n")
         f.write(read_code_file('llama32_detect.py', 29, 171))
-        f.write("```\n\n")
+        f.write("\n```\n")
         
         # Evaluation Process
         f.write("\n## Evaluation Process\n")
         f.write("### Human Evaluation Interface\n")
         f.write("```python:human_evaluation.py\n")
         f.write(read_code_file('human_evaluation.py', 9, 92))
-        f.write("```\n\n")
+        f.write("\n```\n")
         
         # Results Analysis
         f.write("\n## Results Analysis\n")
