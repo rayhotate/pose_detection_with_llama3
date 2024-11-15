@@ -115,7 +115,6 @@ def generate_report():
         
         # Add frame extraction visualization and details
         f.write("### Frame Extraction Process\n")
-        f.write("![Frame Extraction](frame_extraction.png)\n")
         f.write("The frame extraction process is implemented using OpenCV (cv2) with the following specifications:\n\n")
         f.write("- **Sampling Rate**: Every 3 seconds extracted for consistent analysis\n")
         f.write("- **Implementation**:\n")
