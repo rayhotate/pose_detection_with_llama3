@@ -30,43 +30,7 @@ The frame extraction process is implemented using OpenCV (cv2) with the followin
 
 For detailed implementation, see:
 ```python:split2frames.py
-import os
-import cv2
-import shutil
-
-def extract_frames_from_videos(video_dir, output_dir, frequency=3):
-    """
-    Extracts frames from videos at a specified frequency and saves them to an output directory.
-
-    Args:
-        video_dir (str): Directory containing the video files.
-        output_dir (str): Directory where the extracted frames will be saved.
-        frequency (int): The time interval (in seconds) at which frames will be saved.
-    """
-    # Remove the directory if it exists, then create a new one
-    if os.path.exists(output_dir):
-        shutil.rmtree(output_dir)  # Delete the directory and its contents
-    
-    # Create the new output directory
-    os.makedirs(output_dir)
-
-    # Iterate through all files in the video directory
-    for video_file in os.listdir(video_dir):
-        if video_file.endswith(".mp4"):
-            video_path = os.path.join(video_dir, video_file)
-            
-            # Capture the video using OpenCV
-            cap = cv2.VideoCapture(video_path)
-            fps = cap.get(cv2.CAP_PROP_FPS)  # Get the frames per second of the video
-            total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-            video_length = total_frames / fps  # Length of video in seconds
-
-            # Save a frame every 'frequency' seconds
-            frame_interval = frequency  # seconds
-            frame_count = 0
-            success = True
-            
-            while success:
+while success:
                 frame_position = int(frame_interval * fps * frame_count)
                 cap.set(cv2.CAP_PROP_POS_FRAMES, frame_position)
                 success, frame = cap.read()
@@ -93,34 +57,6 @@ if __name__ == "__main__" :
 ### Core Components
 1. **LLaMA 3.2 Vision Model Integration**
 ```python:llama32_detect.py
-# Dir Related
-import os
-from pathlib import Path
-import pandas as pd
-
-import requests
-import torch
-from PIL import Image
-from IPython.display import display, HTML
-from transformers import MllamaForConditionalGeneration, AutoProcessor
-
-#####
-
-def msgs(prompt, with_image=True):
-    if with_image:
-        return [
-            {"role": "user", "content": [
-                {"type": "image"},
-                {"type": "text", "text": prompt}
-            ]}
-        ]
-    else:
-        return [
-            {"role": "user", "content": [
-                {"type": "text", "text": prompt}
-            ]}
-        ]
-    
 def img2text(input_path, output_file = None, exportedfile_indexing = False, show_img = False, max_new_tokens = 1000):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
@@ -263,23 +199,12 @@ Based on your analysis, provide:
     if output_file is not None:
         data_frame = pd.DataFrame(data, columns=['Image', 'llm_evaluation', 'Reason'])
         data_frame.to_csv(output_file, sep = '\t', index = exportedfile_indexing, encoding = 'utf-8')
-    return result 
-
-if __name__ == "__main__" :
-    print(img2text("frames", output_file = "result.tsv", show_img = False))```
+    return result```
 
 
 ## Evaluation Process
 ### Human Evaluation Interface
 ```python:human_evaluation.py
-import os
-import matplotlib
-matplotlib.use('tkagg')  # Use TkAgg backend for interactive display
-import matplotlib.pyplot as plt
-from PIL import Image
-import pandas as pd
-from matplotlib.widgets import Button
-
 class ImageEvaluator:
     def __init__(self):
         # Get list of images from frames directory
@@ -363,11 +288,7 @@ class ImageEvaluator:
         df.index.name = 'Image'
         df = df.sort_index()  # Sort by filename
         df.to_csv('human_result.tsv', sep='\t')
-        print(f"\nResults saved to human_result.tsv")
-        print(f"Evaluated {len(self.results)} images")
-
-if __name__ == "__main__":
-    ImageEvaluator()```
+        print(f"\nResults saved to human_result.tsv")```
 
 
 ## Results Analysis
@@ -389,50 +310,50 @@ if __name__ == "__main__":
 
 ### True Positives (Correct Turning Assistance Detection)
 
-**Image**: `24-hour-home-care---caregiver-training-turning-and-positioning-in-a-bed_frame_59.jpg`
+**Image**: `Assisting with Positioning a Patient in Bed - Ashraf Z Qotmosh (720p, h264, youtube)_frame_138.jpg`
 - **Evaluation**: Both human and LLM correctly identified turning assistance
-- **LLM Reasoning**:   The image depicts a man standing beside a hospital bed, where another man is lying on his back, covered with a white sheet and a pillow. The man standing has short dark hair and is dressed in a blue...
+- **LLM Reasoning**:   The image depicts a patient lying in a hospital bed, with a nurse standing beside them. The patient is positioned on their back, with their head resting on a pillow and their body covered by a white...
 - **Key Features**: Active physical contact, proper positioning, clear movement intent
 
 
-**Image**: `fundamentals-of-turning-and-cushion-placement-when-person-can-assist---1-how-to-turn_frame_44.jpg`
+**Image**: `Assisting with Positioning a Patient in Bed - Ashraf Z Qotmosh (720p, h264, youtube)_frame_63.jpg`
 - **Evaluation**: Both human and LLM correctly identified turning assistance
-- **LLM Reasoning**:   **Analysis of the Image**  The image depicts two women in scrubs attending to a person lying on a bed. The woman in dark blue scrubs is positioned with her hands on the patient's hips, while the wom...
+- **LLM Reasoning**:   **Analysis of the Image**  **People Present:**  *   A patient is visible, lying on their back with their head turned to the right. *   Two nurses are present, standing on either side of the bed.  **...
 - **Key Features**: Active physical contact, proper positioning, clear movement intent
 
 ### True Negatives (Correct Non-Turning Detection)
 
-**Image**: `Assisting with Positioning a Patient in Bed - Ashraf Z Qotmosh (720p, h264, youtube)_frame_166.jpg`
+**Image**: `24-hour-home-care---caregiver-training-turning-and-positioning-in-a-bed_frame_9.jpg`
 - **Evaluation**: Both human and LLM correctly identified non-turning scenario
-- **LLM Reasoning**:   **Step 1: Analyze the image for key elements.**  The image shows a nurse standing beside a patient's bed, with the patient lying on their back covered by a blue blanket. The nurse is wearing blue sc...
+- **LLM Reasoning**:   The image depicts a serene scene of a man standing beside a bed in a hospital room. The man, dressed in a light blue polo shirt and black pants, stands with his hands clasped in front of him, facing...
 - **Key Features**: No physical contact for turning, different care activities
 
 
-**Image**: `fundamentals-of-turning-and-cushion-placement-when-person-can-assist---1-how-to-turn_frame_4.jpg`
+**Image**: `Assisting with Positioning a Patient in Bed - Ashraf Z Qotmosh (720p, h264, youtube)_frame_21.jpg`
 - **Evaluation**: Both human and LLM correctly identified non-turning scenario
-- **LLM Reasoning**:   **Analysis of the Image**  The image shows a woman lying on a table with two women standing beside her. The woman on the left is wearing dark blue scrubs and has her hands clasped together in front ...
+- **LLM Reasoning**:   The image shows a serene hospital room scene, where a patient is reclining in a white hospital bed, wearing a light blue hospital gown with small grey spots. A white pillow supports his head, and a ...
 - **Key Features**: No physical contact for turning, different care activities
 
 ### Notable Disagreements
 
-**Image**: `24-hour-home-care---caregiver-training-turning-and-positioning-in-a-bed_frame_14.jpg`
-- **Human Evaluation**: False
-- **LLM Evaluation**: True
-- **LLM Reasoning**:   The image depicts a man standing beside a hospital bed, where another man lies on his back. The standing man, dressed in a light blue polo shirt and black pants, has his hands clasped together in fr...
-- **Analysis of Disagreement**: LLM possibly over-interpreted preparatory positioning
-
-
-**Image**: `Assisting with Positioning a Patient in Bed - Ashraf Z Qotmosh (720p, h264, youtube)_frame_140.jpg`
-- **Human Evaluation**: False
-- **LLM Evaluation**: True
-- **LLM Reasoning**:   The image depicts a medical setting, with a patient lying in a hospital bed and a healthcare professional attending to them. The scene is set against a backdrop of a hospital room, with various medi...
-- **Analysis of Disagreement**: LLM possibly over-interpreted preparatory positioning
-
-
-**Image**: `fundamentals-of-turning-and-cushion-placement-when-person-can-assist---1-how-to-turn_frame_14.jpg`
+**Image**: `24-hour-home-care---caregiver-training-turning-and-positioning-in-a-bed_frame_65.jpg`
 - **Human Evaluation**: True
 - **LLM Evaluation**: False
-- **LLM Reasoning**:   The image depicts a scene where a patient is lying on a hospital bed, with two women in blue scrubs attending to them. The patient is wearing light blue scrubs and white shoes, and is positioned on ...
+- **LLM Reasoning**:   **Step 1: Identify the people present in the image.**  There is a patient lying on a bed, and a healthcare professional standing beside the bed.  **Step 2: Determine if there is direct physical cont...
+- **Analysis of Disagreement**: LLM possibly over-interpreted preparatory positioning
+
+
+**Image**: `Assisting with Positioning a Patient in Bed - Ashraf Z Qotmosh (720p, h264, youtube)_frame_130.jpg`
+- **Human Evaluation**: False
+- **LLM Evaluation**: True
+- **LLM Reasoning**:   The image depicts a serene hospital room scene, where a patient lies comfortably on a bed, accompanied by a nurse attending to her needs. The patient, an elderly woman with gray hair, is dressed in ...
+- **Analysis of Disagreement**: LLM possibly over-interpreted preparatory positioning
+
+
+**Image**: `Assisting with Positioning a Patient in Bed - Ashraf Z Qotmosh (720p, h264, youtube)_frame_55.jpg`
+- **Human Evaluation**: False
+- **LLM Evaluation**: True
+- **LLM Reasoning**:   The image shows a patient lying on their stomach in a hospital bed, with two nurses standing on either side of the bed. The nurses are wearing blue scrubs with green lanyards around their necks, and...
 - **Analysis of Disagreement**: LLM possibly over-interpreted preparatory positioning
 
 
