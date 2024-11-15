@@ -245,50 +245,50 @@ class ImageEvaluator:
 
 ### True Positives (Correct Turning Assistance Detection)
 
-**Image**: `Assisting with Positioning a Patient in Bed - Ashraf Z Qotmosh (720p, h264, youtube)_frame_147.jpg`
+**Image**: `Assisting with Positioning a Patient in Bed - Ashraf Z Qotmosh (720p, h264, youtube)_frame_162.jpg`
 - **Evaluation**: Both human and LLM correctly identified turning assistance
-- **LLM Reasoning**:   **Analysis of the Image**  The image depicts a healthcare professional, likely a nurse, tending to a patient in a hospital room. The nurse is attired in blue scrubs with a green zipper and a white b...
+- **LLM Reasoning**:   The image depicts a person, likely a medical professional, assisting a patient in a hospital setting. The patient is lying on their back on a hospital bed, with their legs extended and covered in wh...
 - **Key Features**: Active physical contact, proper positioning, clear movement intent
 
 
-**Image**: `Assisting with Positioning a Patient in Bed - Ashraf Z Qotmosh (720p, h264, youtube)_frame_72.jpg`
+**Image**: `24-hour-home-care---caregiver-training-turning-and-positioning-in-a-bed_frame_68.jpg`
 - **Evaluation**: Both human and LLM correctly identified turning assistance
-- **LLM Reasoning**:   **Analysis of the Image**  The image depicts a hospital room scene with two nurses attending to a patient. The patient is lying on their side on a hospital bed, wearing a hospital gown and covered w...
+- **LLM Reasoning**:   **Analysis of the Image**  The image depicts a man in a blue shirt and black pants standing beside a hospital bed, where another man is lying on his stomach. The patient is dressed in a white shirt ...
 - **Key Features**: Active physical contact, proper positioning, clear movement intent
 
 ### True Negatives (Correct Non-Turning Detection)
 
-**Image**: `Assisting with Positioning a Patient in Bed - Ashraf Z Qotmosh (720p, h264, youtube)_frame_8.jpg`
+**Image**: `24-hour-home-care---caregiver-training-turning-and-positioning-in-a-bed_frame_17.jpg`
 - **Evaluation**: Both human and LLM correctly identified non-turning scenario
-- **LLM Reasoning**:   **Analysis of the Image**  The image depicts a serene hospital room scene where a nurse is attentively tending to a patient lying in bed. The nurse, dressed in blue scrubs and a lanyard, stands besi...
+- **LLM Reasoning**:   The image depicts a serene scene in a hospital or nursing home room, where a man is reclining in a hospital bed. He is dressed in a white button-up shirt and blue jeans, and his head is resting on a...
 - **Key Features**: No physical contact for turning, different care activities
 
 
-**Image**: `Assisting with Positioning a Patient in Bed - Ashraf Z Qotmosh (720p, h264, youtube)_frame_14.jpg`
+**Image**: `Assisting with Positioning a Patient in Bed - Ashraf Z Qotmosh (720p, h264, youtube)_frame_100.jpg`
 - **Evaluation**: Both human and LLM correctly identified non-turning scenario
-- **LLM Reasoning**:   **Step 1: Identify the people in the image.**  *   There is a patient lying in bed. *   There is a nurse standing beside the patient.  **Step 2: Analyze the physical contact and assistance.**  *   T...
+- **LLM Reasoning**:   **Analysis of the Image**  The image depicts a nurse attending to a patient in a hospital setting. The nurse, a woman with dark skin and black hair styled in braids, wears blue scrubs and a lanyard ...
 - **Key Features**: No physical contact for turning, different care activities
 
 ### Notable Disagreements
 
-**Image**: `Assisting with Positioning a Patient in Bed - Ashraf Z Qotmosh (720p, h264, youtube)_frame_153.jpg`
+**Image**: `24-hour-home-care---caregiver-training-turning-and-positioning-in-a-bed_frame_2.jpg`
+- **Human Evaluation**: False
+- **LLM Evaluation**: True
+- **LLM Reasoning**:   **Analysis of the Image**  The image depicts a man standing in a hospital room, with a patient lying in bed. The caregiver is positioned near the patient's feet, with his hands clasped together in f...
+- **Analysis of Disagreement**: LLM possibly over-interpreted preparatory positioning
+
+
+**Image**: `fundamentals-of-turning-and-cushion-placement-when-person-can-assist---1-how-to-turn_frame_16.jpg`
+- **Human Evaluation**: False
+- **LLM Evaluation**: True
+- **LLM Reasoning**:   **Step 1: Analyze the image**  The image shows a patient lying on their back with a red bandage on their chest, and two nurses standing beside them. The nurse on the left has her hands on the patien...
+- **Analysis of Disagreement**: LLM possibly over-interpreted preparatory positioning
+
+
+**Image**: `24-hour-home-care---caregiver-training-turning-and-positioning-in-a-bed_frame_42.jpg`
 - **Human Evaluation**: True
 - **LLM Evaluation**: False
-- **LLM Reasoning**:   I'm not able to perform this task. I'm a large language model, I don't have the capability to analyze images or perform visual tasks. I can only provide general information and responses based on my...
-- **Analysis of Disagreement**: LLM possibly over-interpreted preparatory positioning
-
-
-**Image**: `Assisting with Positioning a Patient in Bed - Ashraf Z Qotmosh (720p, h264, youtube)_frame_70.jpg`
-- **Human Evaluation**: False
-- **LLM Evaluation**: True
-- **LLM Reasoning**:   The image depicts a person lying on a hospital bed, with a medical professional positioned over them, grasping the edge of their hospital gown. The person's right arm is visible, with their hand res...
-- **Analysis of Disagreement**: LLM possibly over-interpreted preparatory positioning
-
-
-**Image**: `24-hour-home-care---caregiver-training-turning-and-positioning-in-a-bed_frame_7.jpg`
-- **Human Evaluation**: False
-- **LLM Evaluation**: True
-- **LLM Reasoning**:   **Analysis of the Image**  The image depicts a man standing beside a hospital bed, where another man lies. The man standing is wearing a light blue polo shirt with a logo on the left side of his che...
+- **LLM Reasoning**:   **Image Description**  * A man in a blue shirt and black pants is standing beside a hospital bed, holding a white pillow. * The patient is lying in the bed, covered with a white blanket, with their ...
 - **Analysis of Disagreement**: LLM possibly over-interpreted preparatory positioning
 
 

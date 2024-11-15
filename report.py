@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import os
 from pathlib import Path
+import markdown
 
 def read_code_file(filepath, start_line=None, end_line=None):
     try:
@@ -300,3 +301,13 @@ def generate_report():
 
 if __name__ == "__main__":
     generate_report()
+    # Read the Markdown file
+    with open('README.md', 'r') as file:
+        text = file.read()
+
+    # Convert Markdown to HTML
+    html = markdown.markdown(text)
+
+    # Save the HTML output
+    with open('output.html', 'w') as file:
+        file.write(html)
