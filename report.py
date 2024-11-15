@@ -95,7 +95,7 @@ def generate_report():
     class_report = classification_report(merged_df['human_evaluation'], merged_df['llm_evaluation'], output_dict=True)
     
     # Generate report
-    with open('analysis_report.md', 'w') as f:
+    with open('README.md', 'w') as f:
         # Title and Executive Summary
         f.write("# Patient Turning Assistance Detection Analysis Report\n\n")
         f.write("## Executive Summary\n")
