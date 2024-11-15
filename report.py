@@ -132,7 +132,7 @@ def generate_report():
         f.write("  - Original video sources: 3\n\n")
         f.write("For detailed implementation, see:\n")
         f.write("```python:split2frames.py\n")
-        f.write(read_code_file('split2frames.py', 37, 86))
+        f.write(read_code_file('split2frames.py', 5, 5))
         f.write("\n```\n")
         
         # 3. Technical Implementation
