@@ -5,6 +5,15 @@ import seaborn as sns
 import os
 from pathlib import Path
 
+def read_code_file(filepath):
+    try:
+        with open(filepath, 'r') as f:
+            return f.read().strip()
+    except FileNotFoundError:
+        return f"# Error: File '{filepath}' not found"
+    except Exception as e:
+        return f"# Error reading file: {str(e)}"
+
 def generate_report():
     # Read results
     llm_df = pd.read_csv('llm_result.tsv', sep='\t')
@@ -112,20 +121,23 @@ def generate_report():
         
         f.write("For detailed implementation, see:\n")
         f.write("```python:split2frames.py\n")
-        f.write("def extract_frames_from_videos(video_dir, output_dir, frequency=3):\n")
-        f.write("    # Implementation details\n")
+        f.write(read_code_file('split2frames.py'))
         f.write("```\n\n")
         
         # 3. Technical Implementation
         f.write("## Technical Implementation\n\n")
         f.write("### Core Components\n")
         f.write("1. **LLaMA 3.2 Vision Model Integration**\n")
-        f.write("```python:llama32_detect.py\nstartLine: 29\nendLine: 96\n```\n")
+        f.write("```python:llama32_detect.py\n")
+        f.write(read_code_file('llama32_detect.py'))
+        f.write("```\n\n")
         
         # Evaluation Process
         f.write("\n## Evaluation Process\n")
         f.write("### Human Evaluation Interface\n")
-        f.write("```python:human_evaluation.py\nstartLine: 9\nendLine: 49\n```\n")
+        f.write("```python:human_evaluation.py\n")
+        f.write(read_code_file('human_evaluation.py'))
+        f.write("```\n\n")
         
         # Results Analysis
         f.write("\n## Results Analysis\n")
