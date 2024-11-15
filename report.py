@@ -145,7 +145,17 @@ def generate_report():
         
         # Evaluation Process
         f.write("\n## Evaluation Process\n")
-        f.write("### Human Evaluation Interface\n")
+        f.write("### Human Evaluation Interface\n\n")
+
+        # Add the interface screenshot
+        f.write("![Human Evaluation Interface](evaluation.png)\n\n")
+        f.write("The human evaluation interface provides a simple way to assess images with the following features:\n")
+        f.write("- Displays current image with filename\n")
+        f.write("- Shows LLM's evaluation and reasoning\n")
+        f.write("- Keyboard controls: 't' for True, 'f' for False\n")
+        f.write("- Progress tracking and automatic result saving\n\n")
+
+        f.write("Implementation details:\n")
         f.write("```python:human_evaluation.py\n")
         f.write(read_code_file('human_evaluation.py', 9, 92))
         f.write("\n```\n")
