@@ -148,7 +148,7 @@ def generate_report():
         f.write("### Human Evaluation Interface\n\n")
 
         # Add the interface screenshot
-        f.write("![Human Evaluation Interface](evaluation.png)\n\n")
+        f.write("![Human Evaluation Interface](assets/evaluation.png)\n\n")
         f.write("The human evaluation interface provides a simple way to assess images with the following features:\n")
         f.write("- Displays current image with filename\n")
         f.write("- Shows LLM's evaluation and reasoning\n")
@@ -183,11 +183,11 @@ def generate_report():
         plt.title('Confusion Matrix')
         plt.ylabel('True Label')
         plt.xlabel('Predicted Label')
-        plt.savefig('confusion_matrix.png')
+        plt.savefig('assets/confusion_matrix.png')
         plt.close()
         
         f.write("\n### Confusion Matrix\n")
-        f.write("![Confusion Matrix](confusion_matrix.png)\n\n")
+        f.write("![Confusion Matrix](assets/confusion_matrix.png)\n\n")
         
         # Add examples section
         add_image_examples(f, merged_df, disagreements_df)
