@@ -75,62 +75,7 @@ def img2text(input_path, output_file = None, exportedfile_indexing = False, show
     dir = [input_path]
     if os.path.isdir(input_path):
         dir = os.listdir(input_path)
-    prompt_orig = """You are a medical image analysis expert. Your task is to carefully analyze the image and determine if it shows a patient being assisted in turning by another person. Here are some examples:
-
-Example 1:
-Image: A nurse standing next to a hospital bed with her hands on a patient's shoulder and hip, clearly in the process of rolling them from their back to their side.
-Analysis: True - This shows active turning assistance because:
-- Direct physical contact between caregiver and patient
-- Clear repositioning movement from back to side
-- Proper supportive hand placement for turning
-
-Example 2:
-Image: A patient lying still in bed while a nurse stands nearby checking IV fluids.
-Analysis: False - This is not turning assistance because:
-- No physical contact for movement support
-- Patient position is static
-- Caregiver is performing different care tasks
-
-Example 3:
-Image: A caregiver with hands positioned near a patient's shoulders, standing in a stance ready to assist movement.
-Analysis: True - While turning hasn't started, it's imminent because:
-- Caregiver positioning indicates preparation for movement
-- Hands are positioned appropriately for turning support
-- Stance shows readiness to assist
-
-Now analyze the given image considering:
-
-1. People Present
-- Is there a patient visible?
-- Is there at least one caregiver/assistant visible?
-- What is their relative positioning?
-
-2. Physical Contact & Assistance
-- Is there direct physical contact between caregiver and patient?
-- Where and how is the contact being made (hands, arms, etc.)?
-- Is the caregiver in a stance that indicates they are providing support?
-
-3. Patient Position & Movement
-- What is the patient's current position?
-- Is there evidence of ongoing movement or repositioning?
-- What appears to be the intended direction of movement?
-
-4. Level of Assistance
-- How actively is the caregiver supporting the movement?
-- What specific actions show they are helping with turning?
-- Is this clearly a turning assistance scenario?
-
-Based on your analysis, provide:
-1. A detailed explanation of what you observe
-2. Your final determination: True if turning assistance is occurring/imminent, False if not
-3. The key evidence that led to your conclusion
-"""
-#Remember: Even if turning hasn't started but is clearly about to occur (caregiver positioned and ready to assist), this should be classified as TRUE.
-
-
     
-    #question = 'What is in the image?'
-    #msgs = [{'role': 'user', 'content': prompt}]
     data = []
     result = {}
     for i, image_path in enumerate(sorted(dir)):
@@ -310,50 +255,50 @@ class ImageEvaluator:
 
 ### True Positives (Correct Turning Assistance Detection)
 
-**Image**: `fundamentals-of-turning-and-cushion-placement-when-person-can-assist---1-how-to-turn_frame_58.jpg`
+**Image**: `fundamentals-of-turning-and-cushion-placement-when-person-can-assist---1-how-to-turn_frame_30.jpg`
 - **Evaluation**: Both human and LLM correctly identified turning assistance
-- **LLM Reasoning**:   **Analysis of the Image**  Upon examining the image, we observe a woman in blue scrubs tending to a patient on a bed. The patient is lying on their back with their legs bent and feet flat on the bed...
+- **LLM Reasoning**:   **Step 1: Analyze the Image**  *   The image depicts two women in scrubs tending to a patient in a living room setting. *   The patient is reclined on a massage table, wearing blue scrubs and has th...
 - **Key Features**: Active physical contact, proper positioning, clear movement intent
 
 
-**Image**: `fundamentals-of-turning-and-cushion-placement-when-person-can-assist---1-how-to-turn_frame_53.jpg`
+**Image**: `Assisting with Positioning a Patient in Bed - Ashraf Z Qotmosh (720p, h264, youtube)_frame_151.jpg`
 - **Evaluation**: Both human and LLM correctly identified turning assistance
-- **LLM Reasoning**:   The image depicts a scene of two nurses assisting a patient in a home setting. The patient, lying on their back on a bed with a white sheet, is being supported by the nurses, who are dressed in dark...
+- **LLM Reasoning**:   **Analysis of the Image**  The image depicts a serene hospital room scene, where a woman in blue scrubs stands beside a patient in a hospital bed. The patient is dressed in a light green hospital go...
 - **Key Features**: Active physical contact, proper positioning, clear movement intent
 
 ### True Negatives (Correct Non-Turning Detection)
 
-**Image**: `Assisting with Positioning a Patient in Bed - Ashraf Z Qotmosh (720p, h264, youtube)_frame_93.jpg`
+**Image**: `fundamentals-of-turning-and-cushion-placement-when-person-can-assist---1-how-to-turn_frame_8.jpg`
 - **Evaluation**: Both human and LLM correctly identified non-turning scenario
-- **LLM Reasoning**:   The image depicts a serene hospital room scene, where a nurse is attentively caring for a patient. The nurse, dressed in blue scrubs with a green trim, stands beside the hospital bed, carefully pull...
+- **LLM Reasoning**:   **Step 1: Analyze the image**  *   The image shows a patient lying on a bed with a red ribbon tied around their waist, wearing blue scrubs. Two medical professionals, dressed in blue scrubs and face...
 - **Key Features**: No physical contact for turning, different care activities
 
 
-**Image**: `Assisting with Positioning a Patient in Bed - Ashraf Z Qotmosh (720p, h264, youtube)_frame_5.jpg`
+**Image**: `Assisting with Positioning a Patient in Bed - Ashraf Z Qotmosh (720p, h264, youtube)_frame_36.jpg`
 - **Evaluation**: Both human and LLM correctly identified non-turning scenario
-- **LLM Reasoning**:   The image shows a woman in blue scrubs standing in a hospital corridor, with a wall-mounted dispenser and a door visible in the background. The woman is washing her hands at a beige wall-mounted dis...
+- **LLM Reasoning**:   The image depicts a woman lying in a hospital bed, with a blue blanket or sheet covering her lower body. The purpose of the image is to illustrate the concept of "Supported Supine Position" in a med...
 - **Key Features**: No physical contact for turning, different care activities
 
 ### Notable Disagreements
 
-**Image**: `Assisting with Positioning a Patient in Bed - Ashraf Z Qotmosh (720p, h264, youtube)_frame_75.jpg`
+**Image**: `Assisting with Positioning a Patient in Bed - Ashraf Z Qotmosh (720p, h264, youtube)_frame_99.jpg`
 - **Human Evaluation**: True
 - **LLM Evaluation**: False
-- **LLM Reasoning**:   Based on the provided image, I can see a patient lying on their back in a hospital bed, with a nurse standing beside them. The nurse is holding a folded white towel or sheet, and the patient is hold...
+- **LLM Reasoning**:   **Step 1: Analyze the Image**  The image depicts a serene hospital setting, where a nurse is attentively tending to a patient. The nurse, dressed in blue scrubs with a green trim and a white badge, ...
 - **Analysis of Disagreement**: LLM possibly over-interpreted preparatory positioning
 
 
-**Image**: `Assisting with Positioning a Patient in Bed - Ashraf Z Qotmosh (720p, h264, youtube)_frame_126.jpg`
-- **Human Evaluation**: True
-- **LLM Evaluation**: False
-- **LLM Reasoning**:   The image depicts a serene hospital room scene, where a nurse attentively tends to a patient. The patient, an elderly woman, is reclining on her back in a hospital bed, her head turned to the left, ...
+**Image**: `fundamentals-of-turning-and-cushion-placement-when-person-can-assist---1-how-to-turn_frame_13.jpg`
+- **Human Evaluation**: False
+- **LLM Evaluation**: True
+- **LLM Reasoning**:   **Analysis of the Image**  **People Present:**  *   A patient is visible, lying on a bed. *   At least one caregiver/assistant is visible, standing beside the bed. *   The relative positioning shows...
 - **Analysis of Disagreement**: LLM possibly over-interpreted preparatory positioning
 
 
-**Image**: `Assisting with Positioning a Patient in Bed - Ashraf Z Qotmosh (720p, h264, youtube)_frame_23.jpg`
+**Image**: `Assisting with Positioning a Patient in Bed - Ashraf Z Qotmosh (720p, h264, youtube)_frame_117.jpg`
 - **Human Evaluation**: True
 - **LLM Evaluation**: False
-- **LLM Reasoning**:   **Analysis of the Image**  The image depicts a healthcare professional, dressed in blue scrubs, standing beside a patient in a hospital bed. The patient is wearing a green hospital gown with blue fl...
+- **LLM Reasoning**:   **Step 1: Identify the people present in the image.**  There is a patient visible, lying on their side with their back to the camera, covered in a sheet. There is also at least one caregiver/assista...
 - **Analysis of Disagreement**: LLM possibly over-interpreted preparatory positioning
 
 

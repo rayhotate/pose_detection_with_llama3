@@ -140,7 +140,7 @@ def generate_report():
         f.write("### Core Components\n")
         f.write("1. **LLaMA 3.2 Vision Model Integration**\n")
         f.write("```python:llama32_detect.py\n")
-        f.write(read_code_file('llama32_detect.py', 29, 171))
+        f.write(read_code_file('llama32_detect.py', 80, 167))
         f.write("\n```\n")
         
         # Evaluation Process

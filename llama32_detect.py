@@ -25,26 +25,8 @@ def msgs(prompt, with_image=True):
                 {"type": "text", "text": prompt}
             ]}
         ]
-    
-def img2text(input_path, output_file = None, exportedfile_indexing = False, show_img = False, max_new_tokens = 1000):
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    
-    model_id = "meta-llama/Llama-3.2-11B-Vision-Instruct"
-    model = MllamaForConditionalGeneration.from_pretrained(
-    model_id,
-    torch_dtype=torch.bfloat16,
-    #device_map="auto",
-    )
-    
-    model = model.to(device)
-    processor = AutoProcessor.from_pretrained(model_id)
-    
-    #tokenizer = AutoTokenizer.from_pretrained('meta-llama/Llama-3.2-11B-Vision-Instruct', trust_remote_code=True)
-    #model.eval()
-    dir = [input_path]
-    if os.path.isdir(input_path):
-        dir = os.listdir(input_path)
-    prompt_orig = """You are a medical image analysis expert. Your task is to carefully analyze the image and determine if it shows a patient being assisted in turning by another person. Here are some examples:
+
+prompt_orig = """You are a medical image analysis expert. Your task is to carefully analyze the image and determine if it shows a patient being assisted in turning by another person. Here are some examples:
 
 Example 1:
 Image: A nurse standing next to a hospital bed with her hands on a patient's shoulder and hip, clearly in the process of rolling them from their back to their side.
@@ -94,12 +76,26 @@ Based on your analysis, provide:
 2. Your final determination: True if turning assistance is occurring/imminent, False if not
 3. The key evidence that led to your conclusion
 """
-#Remember: Even if turning hasn't started but is clearly about to occur (caregiver positioned and ready to assist), this should be classified as TRUE.
 
-
+def img2text(input_path, output_file = None, exportedfile_indexing = False, show_img = False, max_new_tokens = 1000):
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
-    #question = 'What is in the image?'
-    #msgs = [{'role': 'user', 'content': prompt}]
+    model_id = "meta-llama/Llama-3.2-11B-Vision-Instruct"
+    model = MllamaForConditionalGeneration.from_pretrained(
+    model_id,
+    torch_dtype=torch.bfloat16,
+    #device_map="auto",
+    )
+    
+    model = model.to(device)
+    processor = AutoProcessor.from_pretrained(model_id)
+    
+    #tokenizer = AutoTokenizer.from_pretrained('meta-llama/Llama-3.2-11B-Vision-Instruct', trust_remote_code=True)
+    #model.eval()
+    dir = [input_path]
+    if os.path.isdir(input_path):
+        dir = os.listdir(input_path)
+    
     data = []
     result = {}
     for i, image_path in enumerate(sorted(dir)):
