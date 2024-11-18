@@ -244,50 +244,50 @@ class ImageEvaluator:
 
 ### True Positives (Correct Turning Assistance Detection)
 
-**Image**: `24-hour-home-care---caregiver-training-turning-and-positioning-in-a-bed_frame_48.jpg`
+**Image**: `fundamentals-of-turning-and-cushion-placement-when-person-can-assist---1-how-to-turn_frame_32.jpg`
 - **Evaluation**: Both human and LLM correctly identified turning assistance
-- **LLM Reasoning**:   The image shows a man in a blue shirt and black pants making a bed with a person lying in it. The purpose of the image is to show a person in a blue shirt and black pants making a bed with a person ...
+- **LLM Reasoning**:   **Analysis of the Image**  **Step 1: People Present**  *   The image shows an elderly woman lying on a bed, with two women standing beside her. The woman on the left is wearing dark blue scrubs and ...
 - **Key Features**: Active physical contact, proper positioning, clear movement intent
 
 
-**Image**: `fundamentals-of-turning-and-cushion-placement-when-person-can-assist---1-how-to-turn_frame_50.jpg`
+**Image**: `Assisting with Positioning a Patient in Bed - Ashraf Z Qotmosh (720p, h264, youtube)_frame_85.jpg`
 - **Evaluation**: Both human and LLM correctly identified turning assistance
-- **LLM Reasoning**:   **Step 1: People Present**  *   A patient is visible, lying on a bed. *   At least one caregiver/assistant is visible, standing next to the bed. *   The caregiver is positioned near the patient's sh...
+- **LLM Reasoning**:   **Analysis of the Image**  The image depicts a person lying on a hospital bed, with a medical professional standing beside them. The person is wearing a light green hospital gown with dark green pol...
 - **Key Features**: Active physical contact, proper positioning, clear movement intent
 
 ### True Negatives (Correct Non-Turning Detection)
 
-**Image**: `Assisting with Positioning a Patient in Bed - Ashraf Z Qotmosh (720p, h264, youtube)_frame_6.jpg`
+**Image**: `fundamentals-of-turning-and-cushion-placement-when-person-can-assist---1-how-to-turn_frame_0.jpg`
 - **Evaluation**: Both human and LLM correctly identified non-turning scenario
-- **LLM Reasoning**:   The image shows a healthcare professional, likely a nurse or doctor, standing in a hospital corridor, facing a wall-mounted dispenser. The woman has short, light-brown hair and wears blue scrubs wit...
+- **LLM Reasoning**:   **Analysis of the Image**  Upon examining the image, I notice that there is no patient visible, nor is there a caregiver or assistant present. The image appears to be a blank, white textured surface...
 - **Key Features**: No physical contact for turning, different care activities
 
 
-**Image**: `Assisting with Positioning a Patient in Bed - Ashraf Z Qotmosh (720p, h264, youtube)_frame_20.jpg`
+**Image**: `24-hour-home-care---caregiver-training-turning-and-positioning-in-a-bed_frame_9.jpg`
 - **Evaluation**: Both human and LLM correctly identified non-turning scenario
-- **LLM Reasoning**:   **Analysis of the Image**  The image depicts a serene hospital room scene, where a patient lies in bed, and a nurse attends to them. The patient is positioned on his back, covered with a white sheet...
+- **LLM Reasoning**:   The image depicts a serene scene of a man standing beside a bed in a hospital room. The man, dressed in a light blue polo shirt and black pants, stands with his hands clasped in front of him, facing...
 - **Key Features**: No physical contact for turning, different care activities
 
 ### Notable Disagreements
 
-**Image**: `24-hour-home-care---caregiver-training-turning-and-positioning-in-a-bed_frame_24.jpg`
-- **Human Evaluation**: False
-- **LLM Evaluation**: True
-- **LLM Reasoning**:   The image depicts a man standing beside a hospital bed, where another man lies on his back. The standing man, dressed in a blue polo shirt and black pants, has his hands outstretched as if he is spe...
+**Image**: `Assisting with Positioning a Patient in Bed - Ashraf Z Qotmosh (720p, h264, youtube)_frame_97.jpg`
+- **Human Evaluation**: True
+- **LLM Evaluation**: False
+- **LLM Reasoning**:   The image depicts a serene scene in a hospital room, where a patient lies comfortably on a bed and a nurse attends to them. The patient, dressed in a light blue hospital gown with grey polka dots, r...
 - **Analysis of Disagreement**: LLM possibly over-interpreted preparatory positioning
 
 
-**Image**: `Assisting with Positioning a Patient in Bed - Ashraf Z Qotmosh (720p, h264, youtube)_frame_57.jpg`
+**Image**: `24-hour-home-care---caregiver-training-turning-and-positioning-in-a-bed_frame_23.jpg`
 - **Human Evaluation**: False
 - **LLM Evaluation**: True
-- **LLM Reasoning**:   The image shows a serene hospital scene, with a patient reclining on a bed, surrounded by two nurses in blue scrubs. The patient is wearing a light green hospital gown and lies on their back, with t...
+- **LLM Reasoning**:   **Step 1: Analyze the image**  The image depicts a man standing beside a hospital bed, where another man lies on his back with his legs slightly bent and covered in a white sheet. The standing man h...
 - **Analysis of Disagreement**: LLM possibly over-interpreted preparatory positioning
 
 
-**Image**: `24-hour-home-care---caregiver-training-turning-and-positioning-in-a-bed_frame_40.jpg`
-- **Human Evaluation**: False
-- **LLM Evaluation**: True
-- **LLM Reasoning**:   **Analysis of the Image**  The image depicts a man lying in bed, with another man standing beside him, holding a pillow. The scene appears to be set in a hospital or medical facility.  **Key Observa...
+**Image**: `Assisting with Positioning a Patient in Bed - Ashraf Z Qotmosh (720p, h264, youtube)_frame_120.jpg`
+- **Human Evaluation**: True
+- **LLM Evaluation**: False
+- **LLM Reasoning**:   **Analysis of the Image**  **Step 1: People Present**  *   The image shows a woman in a hospital gown lying in a hospital bed, with a person in blue scrubs standing next to her.  **Step 2: Physical ...
 - **Analysis of Disagreement**: LLM possibly over-interpreted preparatory positioning
 
 
@@ -377,14 +377,24 @@ The model evaluates each image using four key aspects:
 ### Processing Pipeline
 ```mermaid
 graph TD
-    A[Input Image] --> B[Load Image]  %% Load the image from the specified path
-    B --> C[Describe Image]  %% Generate an initial description of the image
-    C --> D[Generate Initial Analysis]  %% Create a preliminary analysis based on the description
-    D --> E[Detailed Prompt Analysis]  %% Apply a detailed prompt for further analysis
-    E --> F[Generate Full Response]  %% Generate a comprehensive response
-    F --> G[Determine Turning Assistance]  %% Evaluate if turning assistance is occurring
-    G --> H[Binary Classification]  %% Classify the scenario as True or False
-    H --> I[Reasoning Output]  %% Output the reasoning behind the classification
+    A[Input Image] --> B[Load Image]
+    B --> C[Describe Image]
+    C --> D[Generate Initial Analysis]
+    D --> E[Detailed Prompt Analysis]
+    E --> F[Generate Full Response]
+    F --> G[Determine Turning Assistance]
+    G --> H[Binary Classification]
+    H --> I[Reasoning Output]
+
+    %% Process Description:
+    %% A->B: Load the image from the specified path
+    %% B->C: Generate an initial description of the image
+    %% C->D: Create a preliminary analysis based on the description
+    %% D->E: Apply a detailed prompt for further analysis
+    %% E->F: Generate a comprehensive response
+    %% F->G: Evaluate if turning assistance is occurring
+    %% G->H: Classify the scenario as True or False
+    %% H->I: Output the reasoning behind the classification
 ```
 
 ### Output Format
